@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Recipe</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h1 { color: #333; }
+    form { margin-top: 20px; }
+    input, textarea { display: block; width: 100%; margin-bottom: 10px; padding: 8px; }
+    button { padding: 8px 12px; background: blue; color: white; border: none; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>Edit Recipe</h1>
+
+  <form action="/edit/{{ recipe.id }}" method="post">
+    <input type="text" name="name" value="{{ recipe.name }}" required>
+    <textarea name="ingredients" rows="4" required>{{ recipe.ingredients }}</textarea>
+    <textarea name="instructions" rows="4" required>{{ recipe.instructions }}</textarea>
+    <button type="submit">Update Recipe</button>
+  </form>
+
+  <p><a href="/">Back to Recipes</a></p>
+</body>
+</html>

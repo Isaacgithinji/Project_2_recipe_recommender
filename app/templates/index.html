@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Recipe Recommender</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h1 { color: #333; }
+    form { margin-bottom: 20px; }
+    input, textarea { display: block; width: 100%; margin-bottom: 10px; padding: 8px; }
+    button { padding: 8px 12px; background: green; color: white; border: none; cursor: pointer; }
+    button.delete { background: red; margin-top: 5px; }
+    button.edit { background: blue; margin-top: 5px; }
+    .recipe { border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 5px; }
+    .search-bar { margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+  <h1>Recipe Recommender</h1>
+
+  <!-- 🔍 Live Search Input -->
+  <input type="text" id="searchInput" placeholder="Search by name or ingredient..." class="search-bar">
+
+  <h2>Add a New Recipe</h2>
+  <form action="/add" method="post">
+    <input type="text" name="name" placeholder="Recipe Name" required>
+    <textarea name="ingredients" placeholder="Ingredients" rows="4" required></textarea>
+    <textarea name="instructions" placeholder="Instructions" rows="4" required></textarea>
+    <button type="submit">Add Recipe</button>
+  </form>
+
+  <h2>All Recipes</h2>
+  <div id="recipesList">
+    {% for recipe in recipes %}
+      <div class="recipe">
+        <h3>{{ recipe.name }}</h3>
+        <p><strong>Ingredients:</strong><br>{{ recipe.ingredients }}</p>
+        <p><strong>Instructions:</strong><br>{{ recipe.instructions }}</p>
+        <a href="/edit/{{ recipe.id }}"><button class="edit">Edit</button></a>
+        <a href="/delete/{{ recipe.id }}"><button class="delete">Delete</button></a>
+      </div>
+    {% else %}
+      <p>No recipes found. Try adding one!</p>
+    {% endfor %}
+  </div>
+
+  <!-- 🔧 JavaScript for Live Search -->
+  <script>
+    const searchInput = document.getElementById("searchInput");
+    const recipes = document.querySelectorAll(".recipe");
+
+    searchInput.addEventListener("keyup", function() {
+      const query = searchInput.value.toLowerCase();
+      recipes.forEach(recipe => {
+        const text = recipe.innerText.toLowerCase();
+        recipe.style.display = text.includes(query) ? "block" : "none";
+      });
+    });
+  </script>
+</body>
+</html>
